@@ -1,13 +1,12 @@
 package whatsauth
 
-func SendMessageTo(userID string, msg string) (res string) {
-	m := message{[]byte(msg), userID}
-	connections := Hub.rooms[userID]
-	if connections == nil {
-		res = "notfound"
+func SendMessageTo(ID string, msg string) (res bool) {
+	m := message{[]byte(msg), ID}
+	if Hub.rooms[ID] == nil {
+		res = false
 	} else {
 		Hub.broadcast <- m
-		res = "sent"
+		res = true
 	}
 	return res
 }
