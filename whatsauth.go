@@ -1,7 +1,13 @@
 package whatsauth
 
-func SendMessageTo(userID string, msg string) error {
+func SendMessageTo(userID string, msg string) (res string) {
 	m := message{[]byte(msg), userID}
-	Hub.broadcast <- m
-	return nil
+	connections := Hub.rooms[userID]
+	if connections == nil {
+		res = "notfound"
+	} else {
+		Hub.broadcast <- m
+		res = "sent"
+	}
+	return res
 }
