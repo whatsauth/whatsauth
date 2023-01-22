@@ -1,31 +1,35 @@
 # whatsauth
 
-golang package for whatsapp authentication
+golang websocket package for whatsapp authentication
 
-## Get the module
+## Usage
 
 ```sh
 go get github.com/whatsauth/whatsauth
 ```
 
 ```go
-package main
+package controller
 
 import (
-    "fmt"
+ "encoding/json"
+ "fmt"
+ "strconv"
 
-    "github.com/whatsauth/whatsauth"
+ "github.com/gin-gonic/gin"
+ "github.com/whatsauth/whatsauth"
 )
 
-func main() {
-    
+func WsWhatsAuthQR(c *gin.Context) {
+ roomid:=whatsauth.ServeWs(c.Writer, c.Request)
 }
-```
 
-## To Contribute this Repo
-
-```sh
-go test
+func PostWhatsAuthRequest(c *gin.Context) {
+  var req whatsauth.WhatsauthRequest
+  c.BindJSON(&req)
+  status := whatsauth.SendStructTo(req.Uuid, infologin)
+  c.JSON(200, status)
+}
 ```
 
 ## Tagging
