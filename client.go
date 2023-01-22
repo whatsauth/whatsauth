@@ -96,7 +96,7 @@ func (s *subscription) writePump() {
 }
 
 // serveWs handles websocket requests from the peer.
-func ServeWs(w http.ResponseWriter, r *http.Request) {
+func ServeWs(w http.ResponseWriter, r *http.Request) (roomId string) {
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err.Error())
@@ -106,11 +106,12 @@ func ServeWs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	roomId := string(message)
+	roomId = string(message)
 	fmt.Print(roomId)
 	c := &connection{send: make(chan []byte, 256), ws: ws}
 	s := subscription{c, roomId}
 	Hub.register <- s
 	go s.writePump()
 	go s.readPump()
+	return roomId
 }
