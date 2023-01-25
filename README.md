@@ -34,7 +34,7 @@ func PostWhatsAuthRequest(c *gin.Context) {
 
 ## Tagging
 
-develop and publish new version of gogis
+develop and publish new version of whatsauth
 
 ```sh
 git tag v0.0.1
