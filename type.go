@@ -4,6 +4,7 @@ type LoginInfo struct {
 	Userid   string `json:"user_id,omitempty" bson:"user_id,omitempty"`
 	Username string `json:"user_name,omitempty" bson:"user_name,omitempty"`
 	Password string `json:"user_pass,omitempty" bson:"user_pass,omitempty"`
+	Phone    string `json:"phone,omitempty" bson:"phone,omitempty"`
 	Login    string `json:"login,omitempty" bson:"login,omitempty"`
 	Uuid     string `json:"uuid,omitempty" bson:"uuid,omitempty"`
 }
