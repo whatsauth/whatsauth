@@ -62,8 +62,8 @@ func GetHashPasswordfromUsername(username string, usertables []LoginInfo, db *sq
 }
 
 func UpdatePasswordfromUsername(username string, usertables []LoginInfo, db *sql.DB) (newPassword string) {
+	newPassword = watoken.RandomString(10)
 	for _, table := range usertables {
-		newPassword = watoken.RandomString(10)
 		var hashpass string
 		switch table.Login {
 		case "md5":
