@@ -16,7 +16,6 @@ func GetLoginInfofromPhoneNumber(phonenumber string, usertables []LoginInfo, db 
 			response.Password = UpdatePasswordfromUsername(response.Username, usertables, db)
 			fmt.Println("password : " + response.Password)
 			if response.Password != "" {
-				response.Login = "Login"
 				response.Userid = GetUserIdfromUsername(response.Username, usertables, db)
 			}
 
