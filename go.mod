@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/aiteung/atmodel v0.0.1
-	github.com/whatsauth/wasocket v0.0.4
+	github.com/gofiber/websocket/v2 v2.1.3
 	github.com/whatsauth/watoken v0.1.0
 )
 
@@ -13,7 +13,6 @@ require (
 	github.com/fasthttp/websocket v1.5.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/gofiber/fiber/v2 v2.41.0 // indirect
-	github.com/gofiber/websocket/v2 v2.1.3 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
