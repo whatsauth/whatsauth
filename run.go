@@ -92,7 +92,7 @@ func RunModule(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, 
 	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
 		infologin := GetLoginInfofromPhoneNumber(req.Phonenumber, usertables, db)
 		infologin.Uuid = req.Uuid
-		infologin.Login, _ = watoken.Encode(infologin.Username, PrivateKey)
+		infologin.Login, _ = watoken.Encode(req.Phonenumber, PrivateKey)
 		fmt.Println(infologin)
 		status := SendStructTo(req.Uuid, infologin)
 		if status {
