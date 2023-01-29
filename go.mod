@@ -2,10 +2,7 @@ module github.com/whatsauth/whatsauth
 
 go 1.19
 
-require (
-	github.com/gorilla/websocket v1.5.0
-	github.com/whatsauth/watoken v0.1.0
-)
+require github.com/whatsauth/watoken v0.1.0
 
 require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
