@@ -42,6 +42,25 @@ func GetUsernamefromPhonenumber(phone_number string, usertables []LoginInfo, db 
 	return
 }
 
+func GetListUsernamefromPhonenumber(phone_number string, usertables []LoginInfo, db *sql.DB) (usernames []string) {
+	username := ""
+	for _, table := range usertables {
+		q := "select %s from %s where %s = '%s'"
+		tsql := fmt.Sprintf(q, table.Username, table.Uuid,
+			table.Phone, phone_number)
+		err := db.QueryRow(tsql).Scan(&username)
+		if err == sql.ErrNoRows {
+			fmt.Printf("GetUsernamefromPhonenumber, no user in table : %s", table.Uuid)
+		} else if err != nil {
+			fmt.Printf("GetUsernamefromPhonenumber: %v\n", err)
+		}
+		if username != "" {
+			usernames = append(usernames, username)
+		}
+	}
+	return
+}
+
 func GetHashPasswordfromUsername(username string, usertables []LoginInfo, db *sql.DB) (hashpassword string) {
 	for _, table := range usertables {
 		q := "select %s from %s where %s = '%s'"

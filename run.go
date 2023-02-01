@@ -121,3 +121,42 @@ func RunModule(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, 
 	notifbtn.Message = btm
 	return notifbtn
 }
+
+func RunModuleV2(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, db *sql.DB) atmodel.NotifButton {
+	header := "WhatsAuth Single Sign On"
+	var content string
+	footer := fmt.Sprintf("Aplikasi : %v", watoken.GetAppSubDomain(req.Uuid))
+	delay := req.Delay
+	usernames := make([]string, 0, 0)
+	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
+		infologin := GetLoginInfofromPhoneNumber(req.Phonenumber, usertables, db)
+		infologin.Uuid = req.Uuid
+		infologin.Login, _ = watoken.Encode(req.Phonenumber, PrivateKey)
+		fmt.Println(infologin)
+		status := SendStructTo(req.Uuid, infologin)
+		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
+		if status {
+			content = fmt.Sprintf("Hai kak , login aplikasi *sukses*,\nsilahkan kakak kembali ke aplikasi.\nLama kakak kirim pesan di atas : %v detik.", delay)
+		} else {
+			if req.Uuid[0:1] == "m" {
+				content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *buka Magic Link* di bawah ini ya kak, link berlaku selama 30 detik.", delay)
+				tokenstring, err := watoken.EncodeforSeconds(req.Phonenumber, PrivateKey, 30)
+				if err != nil {
+					fmt.Println("simpati RunModule : ", err)
+				}
+				urlakses := watoken.GetAppUrl(req.Uuid) + "?uuid=" + tokenstring
+				footer = fmt.Sprintf("Magic Link : %v", urlakses)
+			} else {
+				content = fmt.Sprintf("Maaf kak *login gagal*.\nKemungkinan qr code tidak valid atau qr code nya sudah expire kak, silahkan scan ulang kembali ya kak.\nKakak butuh waktu %v detik untuk mengirim pesan diatas. Semoga selanjutnya bisa lebih cekatan ya kak. Semangat kak.", delay)
+			}
+		}
+	} else {
+		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
+	}
+	btm := GenerateButtonMessageCustom(header, content, footer, usernames)
+	var notifbtn atmodel.NotifButton
+	notifbtn.User = req.Phonenumber
+	notifbtn.Server = "s.whatsapp.net"
+	notifbtn.Message = btm
+	return notifbtn
+}
