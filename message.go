@@ -21,3 +21,11 @@ func GenerateButtonMessage(header string, content string, footer string) (btnmsg
 	}
 	return btnmsg
 }
+
+func GenerateButtonMessageCustom(header string, content string, footer string, button []atmodel.WaButton) (btnmsg atmodel.ButtonsMessage) {
+	btnmsg.Message.HeaderText = header
+	btnmsg.Message.ContentText = content
+	btnmsg.Message.FooterText = footer
+	btnmsg.Buttons = button
+	return
+}
