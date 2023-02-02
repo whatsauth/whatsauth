@@ -122,7 +122,7 @@ func RunModule(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, 
 	return notifbtn
 }
 
-func RunModuleV2(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, db *sql.DB) atmodel.NotifButton {
+func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, db *sql.DB) atmodel.NotifButton {
 	header := "WhatsAuth Single Sign On"
 	var content string
 	footer := fmt.Sprintf("Aplikasi : %v", watoken.GetAppSubDomain(req.Uuid))
@@ -142,7 +142,7 @@ func RunModuleV2(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo
 				content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *buka Magic Link* di bawah ini ya kak, link berlaku selama 30 detik.", delay)
 				tokenstring, err := watoken.EncodeforSeconds(req.Phonenumber, PrivateKey, 30)
 				if err != nil {
-					fmt.Println("simpati RunModule : ", err)
+					fmt.Println("simpati RunModuleV2 : ", err)
 				}
 				urlakses := watoken.GetAppUrl(req.Uuid) + "?uuid=" + tokenstring
 				footer = fmt.Sprintf("Magic Link : %v", urlakses)

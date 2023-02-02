@@ -2,7 +2,7 @@ package whatsauth
 
 import (
 	"github.com/aiteung/atmodel"
-	"github.com/whatsauth/watoken"
+	"strings"
 )
 
 func GenerateButtonMessage(header string, content string, footer string) (btnmsg atmodel.ButtonsMessage) {
@@ -32,8 +32,8 @@ func GenerateButtonMessageCustom(header string, content string, footer string, b
 	butt := make([]atmodel.WaButton, 0, len(button))
 	for _, v := range button {
 		butt = append(butt, atmodel.WaButton{
-			ButtonId:    watoken.RandomLowerCaseString(4),
-			DisplayText: v,
+			ButtonId:    v,
+			DisplayText: strings.ToTitle(v),
 		})
 	}
 
