@@ -142,7 +142,7 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 				content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *buka Magic Link* di bawah ini ya kak, link berlaku selama 30 detik.", delay)
 				tokenstring, err := watoken.EncodeforSeconds(req.Phonenumber, PrivateKey, 30)
 				if err != nil {
-					fmt.Println("simpati RunModuleV2 : ", err)
+					fmt.Println("simpati RunWithUsername : ", err)
 				}
 				urlakses := watoken.GetAppUrl(req.Uuid) + "?uuid=" + tokenstring
 				footer = fmt.Sprintf("Magic Link : %v", urlakses)
