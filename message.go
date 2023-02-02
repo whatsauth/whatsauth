@@ -36,6 +36,6 @@ func GenerateButtonMessageCustom(header string, content string, footer string, b
 			DisplayText: strings.ToTitle(v),
 		})
 	}
-
+	btnmsg.Buttons = butt
 	return
 }
