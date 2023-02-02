@@ -3,7 +3,6 @@ package whatsauth
 import (
 	"database/sql"
 	"fmt"
-
 	"github.com/whatsauth/watoken"
 )
 
@@ -121,5 +120,30 @@ func GetUserIdfromUsername(username string, usertables []LoginInfo, db *sql.DB) 
 		}
 	}
 
+	return
+}
+
+func GetRolesByPhonenumber(
+	phoneNumber string,
+	userRoles string,
+	usertables []LoginInfo,
+	db *sql.DB,
+) (loginInfo LoginInfo) {
+	loginInfo = GetLoginInfofromPhoneNumber(phoneNumber, usertables, db)
+	role := ""
+	for _, table := range usertables {
+		q := "select %s from %s where %s = '%s' AND %s = '%s'"
+		tsql := fmt.Sprintf(q, table.Username, table.Uuid,
+			table.Phone, phoneNumber, table.Username, userRoles)
+		err := db.QueryRow(tsql).Scan(&role)
+		if err == sql.ErrNoRows {
+			fmt.Printf("GetRolesByPhonenumber, no user in table : %s \n", table.Uuid)
+		} else if err != nil {
+			fmt.Printf("GetRolesByPhonenumber: %v\n", err)
+		}
+	}
+	if role != "" {
+		loginInfo.Username = role
+	}
 	return
 }

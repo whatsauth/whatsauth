@@ -160,3 +160,18 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	notifbtn.Message = btm
 	return notifbtn
 }
+
+func SelectedRoles(
+	req WhatsAuthRoles,
+	usertables []LoginInfo,
+	db *sql.DB,
+) (notifbtn atmodel.NotifButton) {
+	userLogin := GetRolesByPhonenumber(req.Phonenumber, req.Roles, usertables, db)
+	notifbtn.User = req.Phonenumber
+	notifbtn.Server = "s.whatsapp.net"
+	header := fmt.Sprintf("Silahkan masuk sebagai %s", userLogin.Username)
+	const content = ""
+	notifbtn.Message = GenerateButtonMessageCustom(header, content, "", []string{})
+	return
+
+}

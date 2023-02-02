@@ -23,3 +23,8 @@ type WhatsauthMessage struct {
 type WhatsauthStatus struct {
 	Status string `json:"status,omitempty" bson:"status,omitempty"`
 }
+
+type WhatsAuthRoles struct {
+	Phonenumber string `json:"phonenumber,omitempty" bson:"phonenumber,omitempty"`
+	Roles       string `json:"roles,omitempty" bson:"roles,omitempty"`
+}
