@@ -45,7 +45,7 @@ func GenerateButtonMessageCustom(header string, content string, footer string, b
 	butt := make([]atmodel.WaButton, 0, len(uniq))
 	for _, v := range uniq {
 		butt = append(butt, atmodel.WaButton{
-			ButtonId:    v,
+			ButtonId:    "wh4t5auth0." + v,
 			DisplayText: strings.ToTitle(v),
 		})
 	}
