@@ -144,6 +144,7 @@ func GetRolesByPhonenumber(
 	}
 	if role != "" {
 		loginInfo.Username = role
+		loginInfo.Userid = GetUserIdfromUsername(loginInfo.Username, usertables, db)
 	}
 	return
 }

@@ -129,12 +129,36 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	delay := req.Delay
 	usernames := make([]string, 0, 0)
 	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
-		infologin := GetLoginInfofromPhoneNumber(req.Phonenumber, usertables, db)
+		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
+		content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *klik* di bawah ini ya untuk memilih username kakak.", delay)
+	} else {
+		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
+	}
+	btm := GenerateButtonMessageCustom(header, content, footer, usernames)
+	var notifbtn atmodel.NotifButton
+	notifbtn.User = req.Phonenumber
+	notifbtn.Server = "s.whatsapp.net"
+	notifbtn.Message = btm
+	return notifbtn
+}
+
+func SelectedRoles(
+	req WhatsAuthRoles,
+	PrivateKey string,
+	usertables []LoginInfo,
+	db *sql.DB,
+) (notifbtn atmodel.NotifButton) {
+	content := ""
+	footer := fmt.Sprintf("Aplikasi : %v", watoken.GetAppSubDomain(req.Uuid))
+	header := "Silahkan masuk sebagai "
+	delay := req.Delay
+	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
+		infologin := GetRolesByPhonenumber(req.Phonenumber, req.Roles, usertables, db)
 		infologin.Uuid = req.Uuid
 		infologin.Login, _ = watoken.Encode(req.Phonenumber, PrivateKey)
+		header = header + infologin.Username
 		fmt.Println(infologin)
 		status := SendStructTo(req.Uuid, infologin)
-		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
 		if status {
 			content = fmt.Sprintf("Hai kak , login aplikasi *sukses*,\nsilahkan kakak kembali ke aplikasi.\nLama kakak kirim pesan di atas : %v detik.", delay)
 		} else {
@@ -153,25 +177,9 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	} else {
 		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
 	}
-	btm := GenerateButtonMessageCustom(header, content, footer, usernames)
-	var notifbtn atmodel.NotifButton
 	notifbtn.User = req.Phonenumber
 	notifbtn.Server = "s.whatsapp.net"
-	notifbtn.Message = btm
-	return notifbtn
-}
-
-func SelectedRoles(
-	req WhatsAuthRoles,
-	usertables []LoginInfo,
-	db *sql.DB,
-) (notifbtn atmodel.NotifButton) {
-	userLogin := GetRolesByPhonenumber(req.Phonenumber, req.Roles, usertables, db)
-	notifbtn.User = req.Phonenumber
-	notifbtn.Server = "s.whatsapp.net"
-	header := fmt.Sprintf("Silahkan masuk sebagai %s", userLogin.Username)
-	const content = ""
-	notifbtn.Message = GenerateButtonMessageCustom(header, content, "", []string{})
+	notifbtn.Message = GenerateButtonMessageCustom(header, content, footer, []string{})
 	return
 
 }
