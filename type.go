@@ -25,6 +25,7 @@ type WhatsauthStatus struct {
 }
 
 type WhatsAuthRoles struct {
-	WhatsauthRequest
-	Roles string `json:"roles,omitempty" bson:"roles,omitempty"`
+	Uuid        string `json:"uuid,omitempty" bson:"uuid,omitempty"`
+	Phonenumber string `json:"phonenumber,omitempty" bson:"phonenumber,omitempty"`
+	Roles       string `json:"roles,omitempty" bson:"roles,omitempty"`
 }
