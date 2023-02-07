@@ -25,7 +25,13 @@ func GenerateButtonMessage(header string, content string, footer string) (btnmsg
 	return btnmsg
 }
 
-func GenerateButtonMessageCustom(header string, content string, footer string, button []string) (btnmsg atmodel.ButtonsMessage) {
+func GenerateButtonMessageCustom(
+	uuid string,
+	header string,
+	content string,
+	footer string,
+	button []string,
+) (btnmsg atmodel.ButtonsMessage) {
 	if len(button) == 0 {
 		btnmsg = GenerateButtonMessage(header, content, footer)
 		return
@@ -45,7 +51,7 @@ func GenerateButtonMessageCustom(header string, content string, footer string, b
 	butt := make([]atmodel.WaButton, 0, len(uniq))
 	for _, v := range uniq {
 		butt = append(butt, atmodel.WaButton{
-			ButtonId:    "wh4t5auth0." + v,
+			ButtonId:    "wh4t5auth0." + v + "." + uuid,
 			DisplayText: strings.ToTitle(v),
 		})
 	}
