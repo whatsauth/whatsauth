@@ -87,6 +87,8 @@ func UpdatePasswordfromUsername(username string, usertables []LoginInfo, db *sql
 			hashpass = watoken.GetMD5Hash(newPassword)
 		case "2md5":
 			hashpass = watoken.GetMD5Hash(watoken.GetMD5Hash(newPassword))
+		default:
+			hashpass = newPassword
 		}
 		var temp interface{}
 		q := "update %s set %s = '%s' where %s = '%s'"
