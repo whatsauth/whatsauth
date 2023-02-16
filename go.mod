@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/aiteung/atmodel v0.0.1
 	github.com/gofiber/websocket/v2 v2.1.3
-	github.com/whatsauth/watoken v0.1.1
+	github.com/whatsauth/watoken v0.1.2
 )
 
 require (

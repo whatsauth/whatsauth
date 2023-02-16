@@ -3,6 +3,7 @@ package whatsauth
 import (
 	"database/sql"
 	"fmt"
+
 	"github.com/whatsauth/watoken"
 )
 
@@ -87,6 +88,8 @@ func UpdatePasswordfromUsername(username string, usertables []LoginInfo, db *sql
 			hashpass = watoken.GetMD5Hash(newPassword)
 		case "2md5":
 			hashpass = watoken.GetMD5Hash(watoken.GetMD5Hash(newPassword))
+		case "bcrypt":
+			hashpass = watoken.GetBcryptHash(newPassword)
 		default:
 			hashpass = newPassword
 		}
