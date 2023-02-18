@@ -148,7 +148,7 @@ func GetRolesByPhonenumber(
 		}
 	}
 	if role != "" {
-		UpdatePasswordfromUsername(role, usertables, db)
+		loginInfo.Password = UpdatePasswordfromUsername(role, usertables, db)
 		loginInfo.Username = role
 		loginInfo.Userid = GetUserIdfromUsername(loginInfo.Username, usertables, db)
 	}
