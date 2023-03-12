@@ -84,7 +84,7 @@ func RunSocket(c *websocket.Conn, PublicKey string, usertables []LoginInfo, db *
 
 }
 
-func RunModule(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, db *sql.DB) atmodel.NotifButton {
+func RunModuleLegacy(req WhatsauthRequest, PrivateKey string, usertables []LoginInfo, db *sql.DB) atmodel.NotifButton {
 	header := "WhatsAuth Single Sign On"
 	var content string
 	footer := fmt.Sprintf("Aplikasi : %v", watoken.GetAppSubDomain(req.Uuid))
