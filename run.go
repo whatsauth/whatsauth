@@ -159,10 +159,10 @@ func SelectedRoles(
 		fmt.Println(infologin)
 		status := SendStructTo(req.Uuid, infologin)
 		if status {
-			content = fmt.Sprintf("Hai kak , login aplikasi *sukses*,\nsilahkan kakak kembali ke aplikasi.")
+			content = "Hai kak , login aplikasi *sukses*,\nsilahkan kakak kembali ke aplikasi."
 		} else {
 			if req.Uuid[0:1] == "m" {
-				content = fmt.Sprintf("\n Selanjutnya kakak *tinggal login* ya kak.")
+				content = "\n Selanjutnya kakak *tinggal login* ya kak."
 				tokenstring, err := watoken.EncodeforSeconds(req.Phonenumber, PrivateKey, 30)
 				if err != nil {
 					fmt.Println("simpati RunWithUsername : ", err)
@@ -170,11 +170,11 @@ func SelectedRoles(
 				urlakses := watoken.GetAppUrl(req.Uuid) + "?uuid=" + tokenstring
 				footer = fmt.Sprintf("Magic Link : %v", urlakses)
 			} else {
-				content = fmt.Sprintf("Maaf kak *login gagal*.\nKemungkinan qr code tidak valid atau qr code nya sudah expire kak, silahkan scan ulang kembali ya kak. Semangat kak.")
+				content = "Maaf kak *login gagal*.\nKemungkinan qr code tidak valid atau qr code nya sudah expire kak, silahkan scan ulang kembali ya kak. Semangat kak."
 			}
 		}
 	} else {
-		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak.")
+		content = "Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak."
 	}
 	notifbtn.User = req.Phonenumber
 	notifbtn.Server = "s.whatsapp.net"

@@ -9,6 +9,10 @@ type LoginInfo struct {
 	Uuid     string `json:"uuid,omitempty" bson:"uuid,omitempty"`
 }
 
+type Whatsauth struct {
+	Uuid string `json:"uuid"`
+}
+
 type WhatsauthRequest struct {
 	Uuid        string `json:"uuid,omitempty" bson:"uuid,omitempty"`
 	Phonenumber string `json:"phonenumber,omitempty" bson:"phonenumber,omitempty"`
