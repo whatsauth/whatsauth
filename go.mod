@@ -1,6 +1,6 @@
 module github.com/whatsauth/whatsauth
 
-go 1.19
+go 1.20
 
 require (
 	github.com/aiteung/atapi v0.0.10
