@@ -1,6 +1,7 @@
 package whatsauth
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/aiteung/atapi"
@@ -30,7 +31,9 @@ func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waP
 	wareq.Uuid = strings.Replace(*Message.ExtendedTextMessage.Text, Keyword, "", 1)
 	wareq.Phonenumber = Info.Sender.User
 	wareq.Delay = *Message.ExtendedTextMessage.ContextInfo.EntryPointConversionDelaySeconds
+	fmt.Println(wareq)
 	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
+	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	atmessage.SendButtonMessage(btm, Info.Sender, waclient)
 }
@@ -53,7 +56,9 @@ func ButtonMessageWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo,
 	wareq.Uuid = uuidSplit[2]
 	wareq.Roles = uuidSplit[1]
 	wareq.Phonenumber = Info.Sender.User
+	fmt.Println(wareq)
 	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
+	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	atmessage.SendButtonMessage(btm, Info.Sender, waclient)
 

@@ -127,7 +127,7 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	var content string
 	footer := fmt.Sprintf("Aplikasi : %v", watoken.GetAppSubDomain(req.Uuid))
 	delay := req.Delay
-	usernames := make([]string, 0, 0)
+	usernames := make([]string, 0)
 	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
 		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
 		content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *klik* di bawah ini ya untuk memilih username kakak.", delay)
