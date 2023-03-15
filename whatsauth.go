@@ -35,7 +35,9 @@ func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waP
 	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
-	atmessage.SendButtonMessage(btm, Info.Sender, waclient)
+	resp, err := atmessage.SendButtonMessage(btm, Info.Sender, waclient)
+	fmt.Println(resp)
+	fmt.Println(err)
 }
 
 func HandlerWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string, urlwauthrole string) {
