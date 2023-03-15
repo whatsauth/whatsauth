@@ -62,7 +62,7 @@ func ButtonMessageWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo,
 	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
-	if btm.Message.HeaderText == "" {
+	if btm.Message.HeaderText != "" {
 		resp, err := atmessage.SendButtonMessage(btm, Info.Sender, waclient)
 		fmt.Println(resp)
 		fmt.Println(err)
