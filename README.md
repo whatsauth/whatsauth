@@ -37,9 +37,9 @@ func PostWhatsAuthRequest(c *gin.Context) {
 develop and publish new version of whatsauth
 
 ```sh
-git tag v0.0.1
+git tag v0.1.1
 git push origin --tags
-go list -m github.com/whatsauth/whatsauth@v0.0.1
+go list -m github.com/whatsauth/whatsauth@v0.1.1
 ```
 
 ## Environment
