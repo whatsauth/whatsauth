@@ -1,8 +1,11 @@
 package whatsauth
 
 import (
-	"github.com/aiteung/atmodel"
+	"strconv"
 	"strings"
+
+	"github.com/aiteung/atmessage"
+	"github.com/aiteung/atmodel"
 )
 
 func GenerateButtonMessage(header string, content string, footer string) (btnmsg atmodel.ButtonsMessage) {
@@ -57,4 +60,15 @@ func GenerateButtonMessageCustom(
 	}
 	btnmsg.Buttons = butt
 	return
+}
+
+func ButtonMessageToMessage(btm atmessage.ButtonsMessage) string {
+	judul := "*" + btm.Message.HeaderText + "*\n"
+	konten := btm.Message.ContentText + "\n"
+	kaki := "_" + btm.Message.FooterText + "_\n\n"
+	var listroles string
+	for i, role := range btm.Buttons {
+		listroles = listroles + strconv.Itoa(i+1) + ". " + role.DisplayText + "\n" + role.ButtonId + "\n"
+	}
+	return judul + konten + kaki + listroles
 }
