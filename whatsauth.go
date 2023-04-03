@@ -26,7 +26,7 @@ func HasKeyword(Info *types.MessageInfo, Message *waProto.Message) (whmsg bool) 
 	return
 }
 
-func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string) {
+func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string, prefixurlapiwa string) {
 	var wareq WhatsauthRequest
 	wareq.Uuid = strings.Replace(*Message.ExtendedTextMessage.Text, Keyword, "", 1)
 	wareq.Phonenumber = Info.Sender.User
@@ -35,17 +35,17 @@ func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waP
 	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
-	atmessage.SendMessage(ButtonMessageToMessage(btm), Info.Sender, waclient)
+	atmessage.SendMessage(ButtonMessageToMessage(btm, prefixurlapiwa), Info.Sender, waclient)
 	resp, err := atmessage.SendButtonMessage(btm, Info.Sender, waclient)
 	fmt.Println(resp)
 	fmt.Println(err)
 }
 
-func HandlerWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string, urlwauthrole string) {
+func HandlerWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string, urlwauthrole string, prefixurlapiwa string) {
 	if Message.ButtonsResponseMessage != nil {
 		ButtonMessageWhatsauth(waclient, Info, Message, urlwauthrole)
 	} else {
-		RunModule(waclient, Info, Message, urlwauthreq)
+		RunModule(waclient, Info, Message, urlwauthreq, prefixurlapiwa)
 	}
 }
 
