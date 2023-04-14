@@ -57,8 +57,8 @@ func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waP
 func HandlerWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waProto.Message, urlwauthreq string, urlwauthrole string, prefixurlapiwa string) {
 	if Message.ButtonsResponseMessage != nil {
 		ButtonMessageWhatsauth(waclient, Info, Message, urlwauthrole)
-		//} else if HasRoleKeyword(Info, Message) {
-		//	MessageWhatsauth(waclient, Info, Message, urlwauthrole)
+	} else if HasRoleKeyword(Info, Message) {
+		MessageWhatsauth(waclient, Info, Message, urlwauthrole)
 	} else {
 		RunModule(waclient, Info, Message, urlwauthreq, prefixurlapiwa)
 	}
