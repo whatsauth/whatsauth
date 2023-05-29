@@ -21,7 +21,7 @@ func EventReadSocket(roomId string, PublicKey string, usertables []LoginInfo, db
 			fmt.Println("EventReadSocket: phonenumber is empty")
 		}
 	} else if roomId[0:1] == "g" {
-		token := strings.SplitN(roomId, ".", 2)
+		token := strings.SplitN(roomId, ".", 3)
 		phonenumber := watoken.DecodeGetId(PublicKey, token[2])
 		if phonenumber != "" {
 			infologin := GetRolesByPhonenumber(phonenumber, token[1], usertables, db)
