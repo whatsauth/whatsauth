@@ -3,8 +3,9 @@ package whatsauth
 import (
 	"database/sql"
 	"fmt"
-	"github.com/gofiber/websocket/v2"
 	"log"
+
+	"github.com/gofiber/websocket/v2"
 
 	"github.com/whatsauth/watoken"
 
@@ -130,12 +131,14 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	usernames := make([]string, 0)
 	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
 		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
+		log.Printf("\nlist username : %+v\n", len(usernames))
 		if len(usernames) == 1 {
 			data := WhatsAuthRoles{
 				Uuid:        req.Uuid,
 				Phonenumber: req.Phonenumber,
 				Roles:       usernames[0],
 			}
+			log.Printf("\nAuto Select Username : %+v\n", data)
 			return SelectedRoles(data, PrivateKey, usertables, db)
 		}
 		content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *klik* di bawah ini ya untuk memilih username kakak.", delay)
