@@ -3,9 +3,9 @@ package whatsauth
 import (
 	"database/sql"
 	"fmt"
+	"github.com/gofiber/websocket/v2"
 	"log"
 
-	"github.com/gofiber/websocket/v2"
 	"github.com/whatsauth/watoken"
 
 	"github.com/aiteung/atmodel"
@@ -130,6 +130,14 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	usernames := make([]string, 0)
 	if GetUsernamefromPhonenumber(req.Phonenumber, usertables, db) != "" {
 		usernames = GetListUsernamefromPhonenumber(req.Phonenumber, usertables, db)
+		if len(usernames) == 1 {
+			data := WhatsAuthRoles{
+				Uuid:        req.Uuid,
+				Phonenumber: req.Phonenumber,
+				Roles:       usernames[0],
+			}
+			return SelectedRoles(data, PrivateKey, usertables, db)
+		}
 		content = fmt.Sprintf("%v detik menunggu kakak mengirim pesan diatas.\nSelanjutnya kakak *klik* di bawah ini ya untuk memilih username kakak.", delay)
 	} else {
 		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
