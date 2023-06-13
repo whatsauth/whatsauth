@@ -137,6 +137,7 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 	}
 
 	usernames = removeDuplicateValues(usernames)
+
 	if len(usernames) == 1 {
 		data := WhatsAuthRoles{
 			Uuid:        req.Uuid,
