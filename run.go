@@ -136,6 +136,7 @@ func RunWithUsernames(req WhatsauthRequest, PrivateKey string, usertables []Logi
 		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
 	}
 
+	log.Printf("List Usernames : %+v", usernames)
 	if len(usernames) == 1 {
 		data := WhatsAuthRoles{
 			Uuid:        req.Uuid,
