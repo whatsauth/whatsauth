@@ -48,8 +48,9 @@ import (
 )
 
 func Web(page *fiber.App) {
-	page.Post("/api/whatsauth/request", controller.PostWhatsAuthRequest)                //API from user whatsapp message from iteung gowa
-	page.Post("/api/whatsauth/request/role", controller.PostWhatsAuthRole)              //API from user whatsapp message from iteung gowa
+	//API from user whatsapp message from iteung gowa
+	page.Post("/api/whatsauth/request", controller.PostWhatsAuthRequest)                
+	page.Post("/api/whatsauth/request/role", controller.PostWhatsAuthRole)
 
 	//websocket whatsauth to serve wauthjs frontend
 	page.Get("/ws/whatsauth/qr", websocket.New(controller.WsWhatsAuthQR))
