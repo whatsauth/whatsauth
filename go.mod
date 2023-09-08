@@ -2,10 +2,8 @@ module github.com/whatsauth/whatsauth
 
 go 1.21
 
-toolchain go1.21.0
-
 require (
-	github.com/aiteung/atapi v0.0.13
+	github.com/aiteung/atapi v0.0.16
 	github.com/aiteung/atmessage v0.0.27
 	github.com/aiteung/atmodel v0.0.4
 	github.com/aiteung/module v0.0.16

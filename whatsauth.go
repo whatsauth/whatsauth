@@ -45,7 +45,7 @@ func RunModule(waclient *whatsmeow.Client, Info *types.MessageInfo, Message *waP
 	wareq.Phonenumber = Info.Sender.User
 	wareq.Delay = *Message.ExtendedTextMessage.ContextInfo.EntryPointConversionDelaySeconds
 	fmt.Println(wareq)
-	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
+	ntfbtn, _ := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	atmessage.SendMessage(ButtonMessageToMessage(btm, prefixurlapiwa), Info.Sender, waclient)
@@ -75,7 +75,7 @@ func MessageWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo, Messa
 	wareq.Roles = uuidSplit[1]
 	wareq.Phonenumber = Info.Sender.User
 	fmt.Println(wareq)
-	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
+	ntfbtn, _ := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	if btm.Message.HeaderText != "" {
@@ -99,7 +99,7 @@ func ButtonMessageWhatsauth(waclient *whatsmeow.Client, Info *types.MessageInfo,
 	wareq.Roles = uuidSplit[1]
 	wareq.Phonenumber = Info.Sender.User
 	fmt.Println(wareq)
-	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
+	ntfbtn, _ := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	if btm.Message.HeaderText != "" {

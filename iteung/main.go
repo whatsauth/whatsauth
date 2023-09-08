@@ -19,7 +19,7 @@ func MessageWhatsauth(Pesan model.IteungMessage, urlwauthrole string) (msg strin
 	wareq.Roles = uuidSplit[1]
 	wareq.Phonenumber = Pesan.Phone_number
 	fmt.Println(wareq)
-	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
+	ntfbtn, _ := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthrole)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	if btm.Message.HeaderText != "" {
@@ -36,7 +36,7 @@ func RunModule(Pesan model.IteungMessage, Keyword string, urlwauthreq string, pr
 	wareq.Phonenumber = Pesan.Phone_number
 	wareq.Delay = Pesan.From_link_delay
 	fmt.Println(wareq)
-	ntfbtn := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
+	ntfbtn, _ := atapi.PostStruct[atmessage.NotifButton](wareq, urlwauthreq)
 	fmt.Println(ntfbtn)
 	btm := ntfbtn.Message
 	msg = ButtonMessageToMessage(btm, prefixurlapiwa)

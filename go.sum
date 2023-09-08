@@ -7,8 +7,8 @@ github.com/Azure/azure-sdk-for-go/sdk/azcore v1.1.2/go.mod h1:uGG2W01BaETf0Ozp+Q
 github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.2.1/go.mod h1:gLa1CL2RNE4s7M3yopJ/p0iq5DdY6Yv5ZUt9MTRZOQM=
 github.com/Azure/azure-sdk-for-go/sdk/internal v1.0.0/go.mod h1:eWRD7oawr1Mu1sLCawqVc0CUiF43ia3qQMxLscsKQ9w=
 github.com/AzureAD/microsoft-authentication-library-for-go v0.8.1/go.mod h1:4qFor3D/HDsvBME35Xy9rwW9DecL+M2sNw1ybjPtwA0=
-github.com/aiteung/atapi v0.0.13 h1:ibgOklLJkyAwSpx3iGVcdX96Q92tbxvmIMxMEOjbFNk=
-github.com/aiteung/atapi v0.0.13/go.mod h1:WRmSafqlDpo8PqT1NxoobjVEXkk7vJ6fj7bzh0MTzkM=
+github.com/aiteung/atapi v0.0.16 h1:I22MbtDnhRCTimD365Wu+h0rpOJb8zK4bBU6dDsMtYY=
+github.com/aiteung/atapi v0.0.16/go.mod h1:kGz2vwWxDL8wmXEdMIJDBOxYKcZ4b/QR8D0Hi49DQw4=
 github.com/aiteung/atdb v0.0.13 h1:UDWfrkUOX8nwvRzU7mEy3rSqd+nVBJvcX8QSXZ7z6Uc=
 github.com/aiteung/atdb v0.0.13/go.mod h1:MRGq6AWa3G9zo3uruSI386hHU+Mp26/LhBLSstnyMHc=
 github.com/aiteung/atmessage v0.0.27 h1:5/A62cFcNeMQpRwJcOcjTiuE7UhtflbnhZVVJd7tGWQ=
