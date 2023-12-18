@@ -47,8 +47,7 @@ func KeyGenerator(roomId string, PublicKey string) {
 
 	phonenumber := watoken.DecodeGetId(PublicKey, roomId)
 	if phonenumber != "" {
-		infologin := LoginInfo{Phone: phonenumber}
-		infologin.Uuid = roomId
+		infologin := LoginInfo{Phone: phonenumber, Uuid: roomId}
 		SendStructTo(roomId, infologin)
 	}
 }
