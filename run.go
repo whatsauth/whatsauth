@@ -197,7 +197,7 @@ func SelectedRoles(
 
 }
 
-func RunSocketGenerator(c *websocket.Conn) (Id string) { // call this function after declare URL routes
+func RunSocketGenerator(c *websocket.Conn, PublicKey string) (Id string) { // call this function after declare URL routes
 	var s Client
 	// When the function returns, unregister the client and close the connection
 	defer func() {
@@ -220,6 +220,7 @@ func RunSocketGenerator(c *websocket.Conn) (Id string) { // call this function a
 			Conn: c,
 		}
 		Register <- s
+		KeyGenerator(Id, PublicKey)
 		for {
 			messageType, message, err := s.Conn.ReadMessage()
 			if err != nil {

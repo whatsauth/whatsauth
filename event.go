@@ -39,3 +39,16 @@ func EventReadSocket(roomId string, PublicKey string, usertables []LoginInfo, db
 		log.Println("EventReadSocket: roomId[0:1] != v ", roomId, PublicKey)
 	}
 }
+
+func KeyGenerator(roomId string, PublicKey string) {
+	if roomId[0:1] != "v" {
+		return
+	}
+
+	phonenumber := watoken.DecodeGetId(PublicKey, roomId)
+	if phonenumber != "" {
+		infologin := LoginInfo{Phone: phonenumber}
+		infologin.Uuid = roomId
+		SendStructTo(roomId, infologin)
+	}
+}
