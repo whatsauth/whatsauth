@@ -1,9 +1,9 @@
 package sql
 
 import (
-	"auth-service/whatsauth"
 	"fmt"
 	"github.com/whatsauth/watoken"
+	"github.com/whatsauth/whatsauth/v2"
 )
 
 func (q *Queriers) Ping() (err error) {

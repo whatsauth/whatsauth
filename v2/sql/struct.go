@@ -1,8 +1,8 @@
 package sql
 
 import (
-	"auth-service/whatsauth"
 	"database/sql"
+	"github.com/whatsauth/whatsauth/v2"
 	"sync"
 )
 

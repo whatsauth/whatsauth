@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/JPratama7/util v0.1.5
-	github.com/JPratama7/util/hunch v0.0.6
+	github.com/JPratama7/util/hunch v0.0.9
 	github.com/aiteung/atapi v0.1.1
 	github.com/aiteung/atmessage v0.1.0
 	github.com/aiteung/atmodel v0.0.4
@@ -15,7 +15,7 @@ require (
 	github.com/gofiber/websocket/v2 v2.2.1
 	github.com/puzpuzpuz/xsync v1.5.2
 	github.com/whatsauth/watoken v0.1.6
-	go.mau.fi/whatsmeow v0.0.0-20240118101534-66c756f1ba45
+	go.mau.fi/whatsmeow v0.0.0-20240201213949-57f290eebe9b
 )
 
 require (
@@ -35,7 +35,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/mattn/go-sqlite3 v1.14.20 // indirect
+	github.com/mattn/go-sqlite3 v1.14.21 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/rivo/uniseg v0.4.6 // indirect
