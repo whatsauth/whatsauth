@@ -66,7 +66,7 @@ func RunWithUsernames(hub *Hub, req WhatsauthRequest, PrivateKey string, usertab
 		content = fmt.Sprintf("Hai kak , Nomor whatsapp ini *tidak terdaftar* di sistem kami, silahkan silahkan gunakan nomor yang terdftar ya kak. Waktu scan %v detik.", delay)
 	}
 
-	usernames = removeDuplicateValues(usernames)
+	usernames = DuplicateRemover(usernames)
 
 	if len(usernames) == 1 {
 		data := WhatsAuthRoles{

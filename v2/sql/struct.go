@@ -1,11 +1,13 @@
 package sql
 
 import (
+	"auth-service/whatsauth"
 	"database/sql"
-	"github.com/whatsauth/whatsauth/v2"
+	"sync"
 )
 
 type Queriers struct {
+	mut    sync.Mutex
 	config whatsauth.LoginInfo
 	db     *sql.DB
 }

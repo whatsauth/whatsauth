@@ -13,15 +13,25 @@ func EventReadSocket(ru *Hub, roomId string, PublicKey string, usertables []Quer
 	infologin := LoginInfo{}
 
 	defer func() {
+		infologin.Uuid = roomId
+		infologin.Login = roomId
 		ru.SendStructTo(roomId, infologin)
 	}()
 
 STARTFUNC:
 	phonenumber, err := watoken.DecodeWithStruct[LoginData](PublicKey, roomId)
-	log.Printf("EventReadSocket %v %v\n", phonenumber, err)
 	if err != nil {
 		log.Printf("Error decode %v\n", err)
 		return
+	}
+
+	if phonenumber.Data.Password != "" && phonenumber.Data.Username != "" {
+		infologin.Username = phonenumber.Data.Username
+		infologin.Password = phonenumber.Data.Password
+		if err != nil {
+			log.Printf("Error GetLoginInfofromUsername %v\n", err)
+			return
+		}
 	}
 
 	if phonenumber.Data.Username != "" {
@@ -31,8 +41,6 @@ STARTFUNC:
 			return
 		}
 
-		infologin.Uuid = roomId
-		infologin.Login = roomId
 		log.Println("Info Login EventReadSocket Username ", infologin)
 	}
 
@@ -42,8 +50,6 @@ STARTFUNC:
 			log.Printf("Error GetLoginInfofromPhoneNumber %v\n", err)
 			return
 		}
-		infologin.Uuid = roomId
-		infologin.Login = roomId
 		log.Printf("Info Login EventReadSocket PhoneNumber %+v\n", infologin)
 	}
 

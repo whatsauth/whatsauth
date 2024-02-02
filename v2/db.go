@@ -3,8 +3,32 @@ package whatsauth
 import (
 	"context"
 	"github.com/JPratama7/util/hunch"
-	"github.com/whatsauth/watoken"
 )
+
+// Wrapper is a function that wraps the Queries.GetUsernameByPhone method
+func UsernameWrapper(table Queries, phoneNum string) func(ctx context.Context) (string, error) {
+	return func(ctx context.Context) (string, error) {
+		data, err := table.GetUsernameByPhone(phoneNum)
+		return data, err
+	}
+}
+
+// Wrapper is a function that wraps the Queries.GetUsernamesByPhone method
+func UsernamesWrapper(table Queries, phoneNum string) func(ctx context.Context) ([]string, error) {
+	return func(ctx context.Context) ([]string, error) {
+		data, err := table.GetUsernamesByPhone(phoneNum)
+		return data, err
+	}
+}
+
+// Wrapper is a function that wraps the Queries.GetUsernameByPhone method
+func UpdatePasswordWrapper(table Queries, userName, password string) func(ctx context.Context) (*struct{}, error) {
+	return func(ctx context.Context) (*struct{}, error) {
+		var locName, locPass = userName, password
+		_, err := table.UpdatePasswordByUsername(locName, locPass)
+		return nil, err
+	}
+}
 
 func GetLoginInfofromPhoneNumber(phonenumber string, usertables []Queries) (response LoginInfo, err error) {
 	for _, table := range usertables {
@@ -49,17 +73,12 @@ func GetRolesByPhonenumber(
 		}
 	}
 
-	pass := watoken.RandomLowerCaseString(21)
-
 	listF := make([]hunch.Executable[*struct{}], 0, len(usertables))
 
 	for _, table := range usertables {
-		listF = append(listF, func(ctx context.Context) (*struct{}, error) {
-			_, err = table.UpdatePasswordByUsername(loginInfo.Username, pass)
-			return nil, err
-		})
+		elems := UpdatePasswordWrapper(table, loginInfo.Username, loginInfo.Password)
+		listF = append(listF, elems)
 	}
-
 	_ = hunch.ThrowMut[*struct{}](context.Background(), listF...)
 
 	for _, table := range usertables {
@@ -73,15 +92,19 @@ func GetRolesByPhonenumber(
 }
 
 func GetListUsernamefromPhonenumber(phone_number string, usertables []Queries) (usernames []string) {
+
+	listF := make([]hunch.Executable[[]string], 0, len(usertables))
 	for _, table := range usertables {
-		uname, err := table.GetUsernameByPhone(phone_number)
-		if err != nil {
-			continue
-		}
-		if uname == "" {
-			continue
-		}
-		usernames = append(usernames, uname)
+		elems := UsernamesWrapper(table, phone_number)
+		listF = append(listF, elems)
 	}
+	res, _ := hunch.AllMut(context.Background(), true, listF...)
+
+	for _, val := range res {
+		if len(val) > 0 {
+			usernames = append(usernames, val...)
+		}
+	}
+
 	return
 }

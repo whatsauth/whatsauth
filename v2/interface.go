@@ -2,6 +2,7 @@ package whatsauth
 
 type DataFinderByPhone interface {
 	GetUsernameByPhone(phone string) (string, error)
+	GetUsernamesByPhone(phone string) ([]string, error)
 }
 
 type DataFinderByUsername interface {

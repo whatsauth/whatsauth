@@ -12,3 +12,17 @@ func removeDuplicateValues(stringSlice []string) (list []string) {
 	}
 	return list
 }
+
+func DuplicateRemover[T comparable](list []T) (newList []T) {
+	newMap := make(map[T]struct{}, len(list))
+
+	for _, entry := range list {
+		newMap[entry] = struct{}{}
+	}
+
+	for key := range newMap {
+		newList = append(newList, key)
+	}
+
+	return newList
+}

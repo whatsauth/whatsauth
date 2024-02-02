@@ -1,24 +1,68 @@
 package sql
 
 import (
+	"auth-service/whatsauth"
 	"fmt"
 	"github.com/whatsauth/watoken"
-	"github.com/whatsauth/whatsauth/v2"
 )
 
 func (q *Queriers) Ping() (err error) {
+	q.mut.Lock()
+	defer q.mut.Unlock()
+
 	err = q.db.Ping()
 	return
 }
 
 func (q *Queriers) GetUsernameByPhone(phoneNumber string) (username string, err error) {
-	if q.Ping() != nil {
+	if err = q.Ping(); err != nil {
 		return
 	}
 
+	q.mut.Lock()
+	defer q.mut.Unlock()
+
 	tsql := fmt.Sprintf(getUsername, q.config.Username, q.config.Uuid,
 		q.config.Phone, phoneNumber)
+
 	err = q.db.QueryRow(tsql).Scan(&username)
+	if username == "" {
+		err = fmt.Errorf("no data found")
+		return
+	}
+	return
+}
+func (q *Queriers) GetUsernamesByPhone(phoneNumber string) (username []string, err error) {
+	if err = q.Ping(); err != nil {
+		return
+	}
+
+	q.mut.Lock()
+	defer q.mut.Unlock()
+
+	tsql := fmt.Sprintf(getUsername, q.config.Username, q.config.Uuid,
+		q.config.Phone, phoneNumber)
+	fmt.Printf("%s\n\n", tsql)
+
+	cur, err := q.db.Query(tsql)
+	if err != nil {
+		return
+	}
+	defer cur.Close()
+
+	for cur.Next() {
+		var uname string
+		err = cur.Scan(&uname)
+		if err != nil {
+			return
+		}
+		username = append(username, uname)
+	}
+
+	if len(username) == 0 {
+		err = fmt.Errorf("no data found")
+		return
+	}
 	return
 }
 
@@ -26,6 +70,9 @@ func (q *Queriers) GetUserIdByUsername(username string) (userId string, err erro
 	if q.Ping() != nil {
 		return
 	}
+
+	q.mut.Lock()
+	defer q.mut.Unlock()
 
 	tsql := fmt.Sprintf(getUsername, q.config.Userid, q.config.Uuid,
 		q.config.Username, username)
@@ -37,6 +84,9 @@ func (q *Queriers) GetUsernameByUnamePhone(uname, phoneNumber string) (username 
 	if q.Ping() != nil {
 		return
 	}
+
+	q.mut.Lock()
+	defer q.mut.Unlock()
 
 	tsql := fmt.Sprintf(checkUsernameWithPhone, q.config.Username, q.config.Uuid,
 		q.config.Phone, phoneNumber, q.config.Username, uname)
@@ -62,6 +112,9 @@ func (q *Queriers) UpdatePasswordByUsername(username string, pass string) (passw
 		hashpass = password
 	}
 
+	q.mut.Lock()
+	defer q.mut.Unlock()
+
 	tsql := fmt.Sprintf(updatePassword, q.config.Uuid,
 		q.config.Password, hashpass,
 		q.config.Username, username)
@@ -69,6 +122,7 @@ func (q *Queriers) UpdatePasswordByUsername(username string, pass string) (passw
 	if af, _ := res.RowsAffected(); af == 0 {
 		err = fmt.Errorf("no rows affected")
 	}
+
 	return
 }
 
